@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lista de Tickets</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --azul: #007bff;
+      --verde: #28a745;
+      --cinza-claro: #f2f2f2;
+      --cinza: #ddd;
+      --branco: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    #dashboard {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .dash-card {
+      background: var(--azul);
+      color: var(--branco);
+      padding: 20px;
+      border-radius: 12px;
+      min-width: 150px;
+      text-align: center;
+      font-size: 18px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+      background: var(--branco);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    input, select, button {
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--cinza);
+    }
+
+    button {
+      background-color: var(--verde);
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: var(--branco);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    th, td {
+      padding: 14px;
+      border-bottom: 1px solid var(--cinza);
+      text-align: left;
+    }
+
+    th {
+      background-color: var(--azul);
+      color: var(--branco);
+      cursor: pointer;
+      position: sticky;
+      top: 0;
+    }
+
+    tr:nth-child(even) {
+      background-color: var(--cinza-claro);
+    }
+
+    .action-btn, .edit-btn {
+      cursor: pointer;
+      font-size: 18px;
+      margin-right: 8px;
+    }
+
+    .action-btn { color: red; }
+    .edit-btn { color: green; }
+
+    #exportar {
+      display: block;
+      margin: 20px auto;
+      padding: 12px 24px;
+      font-size: 14px;
+      background-color: var(--verde);
+      color: white;
+      border: none;
+      border-radius: 8px;
+    }
+
+    .filtro-coluna {
+      width: 100%;
+      padding: 6px;
+      font-size: 12px;
+      margin-top: 4px;
+      border-radius: 6px;
+    }
+
+    @media (max-width: 600px) {
+      .dash-card {
+        font-size: 14px;
+        min-width: 120px;
+      }
+      form {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Lista de Acompanhamento de Tickets</h1>
+  <div id="dashboard"></div>
+  <canvas id="grafico-status" height="120"></canvas>
+
+  <form id="ticket-form">
+    <input type="text" id="ticket" placeholder="Ticket" required />
+    <input type="text" id="cliente" placeholder="Cliente" required />
+    <input type="text" id="solicitante" placeholder="Solicitante" required />
+    <input type="email" id="email" placeholder="E-mail" required />
+    <select id="status" required>
+      <option value="">Selecione o status</option>
+      <option value="Aberto">Aberto</option>
+      <option value="Em andamento">Em andamento</option>
+      <option value="Aguardando cliente">Aguardando cliente</option>
+      <option value="Resolvido">Resolvido</option>
+      <option value="Fechado">Fechado</option>
+      <option value="Transferidos">Transferidos</option>
+      <option value="Em correção">Em correção</option>
+    </select>
+    <input type="text" id="obs" placeholder="Observações" />
+    <button type="submit">Adicionar Ticket</button>
+  </form>
+
+  <button id="exportar">Exportar CSV</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Ticket<br><input class="filtro-coluna" data-col="0" placeholder="Filtrar" /></th>
+        <th>Cliente<br><input class="filtro-coluna" data-col="1" placeholder="Filtrar" /></th>
+        <th>Solicitante<br><input class="filtro-coluna" data-col="2" placeholder="Filtrar" /></th>
+        <th>E-mail<br><input class="filtro-coluna" data-col="3" placeholder="Filtrar" /></th>
+        <th>Status<br><input class="filtro-coluna" data-col="4" placeholder="Filtrar" /></th>
+        <th>Observações<br><input class="filtro-coluna" data-col="5" placeholder="Filtrar" /></th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody id="ticket-table"></tbody>
+  </table>
+
+  <script>
+    // Aqui entraria a lógica JS (que você já tem ou posso completar)
+  </script>
+</body>
+</html>
