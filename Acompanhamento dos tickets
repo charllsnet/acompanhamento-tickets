@@ -1,0 +1,59 @@
+function atualizarDashboard() {
+  const statusContagem = {};
+  tickets.forEach(t => {
+    statusContagem[t.status] = (statusContagem[t.status] || 0) + 1;
+  });
+
+  dashboard.innerHTML = "";
+  for (let status in statusContagem) {
+    const div = document.createElement("div");
+    div.className = "dash-card";
+    div.textContent = `${status}: ${statusContagem[status]}`;
+    dashboard.appendChild(div);
+  }
+
+  // Atualiza gráfico
+  desenharGrafico(statusContagem);
+}
+
+let graficoStatus = null;
+
+function desenharGrafico(data) {
+  const ctx = document.getElementById("grafico-status").getContext("2d");
+  const labels = Object.keys(data);
+  const valores = Object.values(data);
+
+  if (graficoStatus) {
+    graficoStatus.destroy();
+  }
+
+  graficoStatus = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [{
+        label: "Tickets por Status",
+        data: valores,
+        backgroundColor: "#007bff",
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: "Distribuição de Tickets por Status"
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1
+          }
+        }
+      }
+    }
+  });
+}
